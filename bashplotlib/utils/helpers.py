@@ -82,12 +82,14 @@ def box_text(text, width, title_align = "c", offset=0):
     """
     if len(text) > width:
         text = text[:width-3] + "..."
-    box = " " * offset + "+" + "-" * (width) + "+" + "\n"
+    box = " " * offset + "+" + "-" * (width+2) + "+" + "\n"
+    box += " " * offset + "|+" + "-" * (width) + "+|" + "\n"
     if title_align == "c":
-        box += " " * offset + "|" + text.center(width) + "|" + "\n"
+        box += " " * offset + "||" + text.center(width) + "||" + "\n"
     elif title_align == "l":
-        box += " " * offset + "|" + text.ljust(width) + "|" + "\n"
+        box += " " * offset + "||" + text.ljust(width) + "||" + "\n"
     elif title_align == "r":
-        box += " " * offset + "|" + text.rjust(width) + "|" + "\n"
-    box += " " * offset + "+" + "-" * (width) + "+"
+        box += " " * offset + "||" + text.rjust(width) + "||" + "\n"
+    box += " " * offset + "|+" + "-" * (width) + "+|" + "\n"
+    box += " " * offset + "+" + "-" * (width+2) + "+"
     return box
