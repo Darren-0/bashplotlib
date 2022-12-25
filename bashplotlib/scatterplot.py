@@ -28,12 +28,14 @@ def get_scale(series, is_y=False, steps=20):
     return scaled_series
 
 
-def _plot_scatter(xs, ys, size, pch, colour, title, cs):
+def _plot_scatter(xs, ys, size, pch, colour, title, cs, xs_title, ys_title):
     plotted = set()
-
+    
     if title:
         print(box_text(title, 2 * (len(get_scale(xs, False, size)) + 1)))
 
+    if ys_title != None and isinstance(ys_title, str):
+        print(f'y: {ys_title}')
     print("-" * (2 * (len(get_scale(xs, False, size)) + 2)))
     for y in get_scale(ys, True, size):
         print("|", end=' ')
@@ -48,8 +50,12 @@ def _plot_scatter(xs, ys, size, pch, colour, title, cs):
             printcolour(point + " ", True, colour)
         print(" |")
     print("-" * (2 * (len(get_scale(xs, False, size)) + 2)))
+    if xs_title != None and isinstance(xs_title, str):
+        print(" " * (2 * (len(get_scale(xs, False, size)) + 2) - len(xs_title) - 3) 
+        + "x: " + xs_title)
 
-def plot_scatter(f, xs, ys, size, pch, colour, title):
+
+def plot_scatter(f, xs, ys, size, pch, colour, title, xs_title = None, ys_title = None):
     """
     Form a complex number.
 
@@ -81,7 +87,7 @@ def plot_scatter(f, xs, ys, size, pch, colour, title):
         with open(ys) as fh:
             ys = [float(str(row).strip()) for row in fh]
 
-    _plot_scatter(xs, ys, size, pch, colour, title, cs)
+    _plot_scatter(xs, ys, size, pch, colour, title, cs, xs_title, ys_title)
     
 
 
