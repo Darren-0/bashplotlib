@@ -30,7 +30,13 @@ def get_scale(series, is_y=False, steps=20):
 
 def _plot_scatter(xs, ys, size, pch, colour, title, cs, xs_title, ys_title):
     plotted = set()
-    
+    axis_x, axis_y, point_0 = False, False, False
+    if min(xs) < 0 and max(xs) > 0:
+        axis_x = True
+    if min(ys) < 0 and max(ys) > 0:
+        axis_y = True
+    if axis_y == True and axis_x == True:
+        point_0 =True
     if title:
         print(box_text(title, 2 * (len(get_scale(xs, False, size)) + 1)))
 
@@ -41,6 +47,7 @@ def _plot_scatter(xs, ys, size, pch, colour, title, cs, xs_title, ys_title):
         print("|", end=' ')
         for x in get_scale(xs, False, size):
             point = " "
+            #add the 0 axis here 
             for (i, (xp, yp)) in enumerate(zip(xs, ys)):
                 if xp <= x and yp >= y and (xp, yp) not in plotted:
                     point = pch
@@ -62,7 +69,7 @@ def plot_scatter(f, xs, ys, size, pch, colour, title, xs_title = None, ys_title 
     Arguments:
         f -- comma delimited file w/ x,y coordinates
         xs -- if f not specified this is a file w/ x coordinates
-        ys -- if f not specified this is a filew / y coordinates
+        ys -- if f not specified this is a file w/ y coordinates
         size -- size of the plot
         pch -- shape of the points (any character)
         colour -- colour of the points
@@ -90,7 +97,7 @@ def plot_scatter(f, xs, ys, size, pch, colour, title, xs_title = None, ys_title 
     _plot_scatter(xs, ys, size, pch, colour, title, cs, xs_title, ys_title)
     
 
-
+# need to add option to add axis title in this
 def main():
 
     parser = optparse.OptionParser(usage=scatter['usage'])
