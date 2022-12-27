@@ -30,11 +30,11 @@ def get_scale(series, is_y=False, steps=20):
 
 def _plot_scatter(xs, ys, size, pch, colour, title, cs, xs_title, ys_title):
     plotted = set()
-    axis_x, axis_y, point_0 = False, False, False
-    if min(xs) < 0 and max(xs) > 0:
-        axis_x = True
-    if min(ys) < 0 and max(ys) > 0:
+    axis_x, axis_y, point_0, axis_x_count = False, False, False, True
+    if min(xs) < 0 and max(xs) > 0: 
         axis_y = True
+    if min(ys) < 0 and max(ys) > 0:
+        axis_x = True
     if axis_y == True and axis_x == True:
         point_0 =True
     if title:
@@ -45,17 +45,32 @@ def _plot_scatter(xs, ys, size, pch, colour, title, cs, xs_title, ys_title):
     print("-" * (2 * (len(get_scale(xs, False, size)) + 2)))
     for y in get_scale(ys, True, size):
         print("|", end=' ')
+        axis_y_count = True
         for x in get_scale(xs, False, size):
             point = " "
-            #add the 0 axis here 
+            #generate the x-axis(i.e. there are positive and negative y points)
+            if axis_x and y < 0 and axis_x_count:
+                point = "-"
+                if axis_y and x > 0 and axis_y_count:
+                    point = "0"
+                    axis_y_count = False
+            #generate the y-axis(i.e there are positive and negative x points)
+            elif axis_y and x > 0 and axis_y_count:
+                point = "|"
+                axis_y_count = False
             for (i, (xp, yp)) in enumerate(zip(xs, ys)):
                 if xp <= x and yp >= y and (xp, yp) not in plotted:
                     point = pch
                     plotted.add((xp, yp))
                     if cs:
                         colour = cs[i]
-            printcolour(point + " ", True, colour)
+            if point == "|" or point == "-" or point == "0":
+                printcolour(point + " ", True, "default")
+            else:
+                printcolour(point + " ", True, colour)
         print(" |")
+        if y < 0:
+            axis_x_count = False
     print("-" * (2 * (len(get_scale(xs, False, size)) + 2)))
     if xs_title != None and isinstance(xs_title, str):
         print(" " * (2 * (len(get_scale(xs, False, size)) + 2) - len(xs_title) - 3) 
