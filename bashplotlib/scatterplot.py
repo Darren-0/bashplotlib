@@ -29,6 +29,7 @@ def get_scale(series, is_y=False, steps=20):
 
 
 def _plot_scatter(xs, ys, size, pch, colour, title, cs, xs_title, ys_title):
+    graph = ""
     plotted = set()
     axis_x, axis_y, point_0, axis_x_count = False, False, False, True
     if min(xs) < 0 and max(xs) > 0: 
@@ -38,13 +39,13 @@ def _plot_scatter(xs, ys, size, pch, colour, title, cs, xs_title, ys_title):
     if axis_y == True and axis_x == True:
         point_0 =True
     if title:
-        print(box_text(title, 2 * (len(get_scale(xs, False, size)) + 1)))
+        graph += f'{box_text(title, 2 * (len(get_scale(xs, False, size)) + 1))}\n'
 
     if ys_title != None and isinstance(ys_title, str):
-        print(f'y: {ys_title}')
-    print("-" * (2 * (len(get_scale(xs, False, size)) + 2)))
+        graph += f'y: {ys_title}\n'
+    graph += "-" * (2 * (len(get_scale(xs, False, size)) + 2)) + '\n'
     for y in get_scale(ys, True, size):
-        print("|", end=' ')
+        graph += "| "
         axis_y_count = True
         for x in get_scale(xs, False, size):
             point = " "
@@ -64,17 +65,15 @@ def _plot_scatter(xs, ys, size, pch, colour, title, cs, xs_title, ys_title):
                     plotted.add((xp, yp))
                     if cs:
                         colour = cs[i]
-            if point == "|" or point == "-" or point == "0":
-                printcolour(point + " ", True, "default")
-            else:
-                printcolour(point + " ", True, colour)
-        print(" |")
+            graph += point + " "
+        graph += " |\n"
         if y < 0:
             axis_x_count = False
-    print("-" * (2 * (len(get_scale(xs, False, size)) + 2)))
+    graph += ("-" * (2 * (len(get_scale(xs, False, size)) + 2))) + '\n'
     if xs_title != None and isinstance(xs_title, str):
-        print(" " * (2 * (len(get_scale(xs, False, size)) + 2) - len(xs_title) - 3) 
-        + "x: " + xs_title)
+        graph += (" " * (2 * (len(get_scale(xs, False, size)) + 2) - len(xs_title) - 3) 
+        + "x: " + xs_title) + '\n'
+    return graph
 
 
 def plot_scatter(f, xs, ys, size, pch, colour, title, xs_title = None, ys_title = None):
@@ -109,7 +108,12 @@ def plot_scatter(f, xs, ys, size, pch, colour, title, xs_title = None, ys_title 
         with open(ys) as fh:
             ys = [float(str(row).strip()) for row in fh]
 
-    _plot_scatter(xs, ys, size, pch, colour, title, cs, xs_title, ys_title)
+    graph = _plot_scatter(xs, ys, size, pch, colour, title, cs, xs_title, ys_title)
+    #if point == "|" or point == "-" or point == "0":
+        #printcolour(point + " ", True, "default")
+    #else:
+        # printcolour(point + " ", True, colour)
+    print(graph)
     
 
 # need to add option to add axis title in this
