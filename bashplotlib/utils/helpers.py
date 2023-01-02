@@ -80,6 +80,8 @@ def box_text(text, width, title_align = "c", offset=0):
     """
     Return text inside an ascii textbox
     """
+    #to account for modification to the text box
+    width -= 2
     if len(text) > width:
         text = text[:width-3] + "..."
     box = " " * offset + "+" + "-" * (width+2) + "+" + "\n"

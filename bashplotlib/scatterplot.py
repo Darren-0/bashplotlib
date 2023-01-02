@@ -38,6 +38,7 @@ def _plot_scatter(xs, ys, size, pch, colour, title, cs, xs_title, ys_title):
         axis_x = True
     if axis_y == True and axis_x == True:
         point_0 =True
+    #print title box
     if title:
         graph += f'{box_text(title, 2 * (len(get_scale(xs, False, size)) + 1))}\n'
 
