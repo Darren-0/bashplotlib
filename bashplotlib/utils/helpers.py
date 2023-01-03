@@ -53,10 +53,11 @@ def drange(start, stop, step=1.0, include_stop=False):
     r = start
 
     if include_stop:
-        while r <= stop:
-            yield r
+        yield r
+        while r < stop:
             r += step
             r = round(r, 10)
+            yield r
     else:
         while r < stop:
             yield r
