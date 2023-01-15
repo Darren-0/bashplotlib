@@ -34,7 +34,6 @@ def _plot_scatter(xs, ys, size, pch, colour, title, cs, xs_title, ys_title):
     graph = ""
     plotted = set()
     x_scale = get_scale(xs, False, size)
-    print(x_scale)
     y_scale = get_scale(ys, True, size)
     #'*2' is due to the each point having a space in between, '+2' is due to the box border
     plot_width = 2 * (len(x_scale)+2)
@@ -77,7 +76,7 @@ def _plot_scatter(xs, ys, size, pch, colour, title, cs, xs_title, ys_title):
     graph += ("-" * (2 * (len(get_scale(xs, False, size)) + 2))) + '\n'
     if xs_title != None and isinstance(xs_title, str):
         graph += (" " * (2 * (len(get_scale(xs, False, size)) + 2) - len(xs_title) - 3) 
-        + "x: " + xs_title) + '\n'
+        + "x: " + xs_title)
     return graph
 
 
