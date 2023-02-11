@@ -1,6 +1,17 @@
 from bashplotlib.scatterplot import plot_scatter
+from bashplotlib.histogram import plot_hist
 
-x_coords = [-10, 20, 30]
+'''height = 20
+bincount = 5
+binwidth = 20'''
+
+plot_hist(
+    'hist_data.txt',
+    title = "test histogram",
+    showSummary=True
+)
+
+'''x_coords = [-10, 20, 30]
 y_coords = [-10, 20, 30]
 width = 10
 char = 'x'
@@ -19,4 +30,4 @@ plot_scatter(
     title, 
     xs_title, 
     ys_title
-)
+)'''

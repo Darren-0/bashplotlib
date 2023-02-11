@@ -77,22 +77,46 @@ def abbreviate(labels, rfill=' '):
     return abbrev
 
 
-def box_text(text, width, title_align = "c", offset=0):
+def box_text(text, width, separator = False, title_align = "c", offset=0):
     """
     Return text inside an ascii textbox
+    
+    Arguments help:
+    text -- text to be placed in the box, can be single line or multiple line
+    width -- width of the box
+    separator -- option to separate the first line from the rest
+    title_align -- c for centre, r for right, l for left
+    offset -- how far the box would be offset from the left
     """
+    #need to make sure that multi-line text is able to be processed
+    #maybe accept the text in list form
+    #if separator = True, separate the first line, can improve to choose which line to separate
+
     #to account for modification to the text box
     width -= 2
-    if len(text) > width:
-        text = text[:width-3] + "..."
+
+    if isinstance(text, list):
+        title = text[0]
+        content = text[1:]
+    elif isinstance(text, str):
+        title = text
+        content = None
+    if len(title) > width:
+        title = title[:width-3] + "..."
+    
     box = " " * offset + "+" + "-" * (width+2) + "+" + "\n"
     box += " " * offset + "|+" + "-" * (width) + "+|" + "\n"
     if title_align == "c":
-        box += " " * offset + "||" + text.center(width) + "||" + "\n"
+        box += " " * offset + "||" + title.center(width) + "||" + "\n"
     elif title_align == "l":
-        box += " " * offset + "||" + text.ljust(width) + "||" + "\n"
+        box += " " * offset + "||" + title.ljust(width) + "||" + "\n"
     elif title_align == "r":
-        box += " " * offset + "||" + text.rjust(width) + "||" + "\n"
+        box += " " * offset + "||" + title.rjust(width) + "||" + "\n"
+    if content != None:
+        if separator:
+            box += " " * offset + "||" + "-" * (width) + "||" + "\n"
+        for i in content:
+            box += " " * offset + "||" + i.center(width) + "||" + "\n"
     box += " " * offset + "|+" + "-" * (width) + "+|" + "\n"
     box += " " * offset + "+" + "-" * (width+2) + "+"
     return box
